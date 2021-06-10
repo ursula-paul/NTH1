@@ -74,19 +74,19 @@ router.get('/profile', ensureAuthenticated, function(req, res) {
   res.render('profile');
 });
 
-router.get('/chats', ensureAuthenticated, function(req, res) {
+router.get('/chats', function(req, res) {
   res.render('chat');
 });
 
 router.post('/chats', function(req, res) {
-res.render('chat',);
+res.render('chat')
+console.log(req.body)
   const {message} = req.body
 
   const id = "60bb72e01f2a3a55dc008bd2"
 
-  User.update(
-    { _id: id },
-    { $push: {conversation: {message:message}} },
+  User.updateOne(
+    { },
     (err,data) =>{
       if(err){
         console.log(err),
