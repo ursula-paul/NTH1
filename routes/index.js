@@ -74,28 +74,28 @@ router.get('/profile', ensureAuthenticated, function(req, res) {
   res.render('profile');
 });
 
-router.get('/chats', function(req, res) {
+router.get('/chats', ensureAuthenticated, function(req, res) {
   res.render('chat');
 });
 
-router.post('/chats', function(req, res) {
+router.post('/chats:id', ensureAuthenticated, function(req, res) {
 res.render('chat')
 console.log(req.body)
   const {message} = req.body
 
-  const id = "60bb72e01f2a3a55dc008bd2"
+  const id = "60c356f7e066e6240c280933"
 
-  User.updateOne(
-    { },
+  User.findOneAndUpdate(
+    { _id: id },
+    { $push: { converstion: message}},
+    {upset: true},
     (err,data) =>{
       if(err){
         console.log(err),
         res.render('chat')
-        res.status(500).send(err)
+        
       }else{
-        console.log(data),
-        res.render('chat')
-        res.status(200).send(data)
+        res.render('chat', { data: data } );
       }
     }
    
